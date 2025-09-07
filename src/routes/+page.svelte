@@ -149,16 +149,19 @@
 	let selected: string;
 	let isolateProfile = false;
 	list_versions(PROJECT_ID).then((result) => {
-		const featured_versions = result
-			.filter((e) => e.featured)
-			.filter((e) => e.files.find((e) => e.filename == 'cosign-bundle.zip'));
-		const release_versions = featured_versions.filter((e) => e.version_type == 'release');
-		versions = featured_versions;
-		if (release_versions.length > 0) {
-			selected = release_versions[0].id;
-		} else {
-			selected = featured_versions[0].id;
+		console.log('Total versions:', result.length);
+		
+		// Show ALL versions for debugging - remove all filtering
+		versions = result;
+		console.log('Showing all versions without any filtering');
+		
+		// Just pick the first version if any exist
+		if (result.length > 0) {
+			selected = result[0].id;
+			console.log('Selected first version:', result[0].name, 'ID:', result[0].id);
 		}
+		
+		console.log('Final versions count:', versions ? versions.length : 0);
 	});
 	let state:
 		| 'preInstall'
@@ -199,7 +202,7 @@
 	}
 
 	function openHelp() {
-		open('https://wiki.download.fo/version-support');
+		open('https://github.com/bfenwick8798/modpackinstaller');
 	}
 
 	async function browseProfileDirectory() {

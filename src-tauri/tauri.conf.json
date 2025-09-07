@@ -22,7 +22,7 @@
         "confirm": true
       },
       "shell": {
-        "open": "^https://wiki.download.fo/"
+        "open": ""
       }
     },
     "bundle": {
