@@ -6,6 +6,7 @@
 		show_profile_dir_selector
 	} from '$lib/installer';
 	import { get_project, list_versions, type Version } from '$lib/modrinth';
+	import { getModpackConfig } from '$lib/modpack-config';
 	import { trans, locale, langIds, langName, dir, getDir } from '$lib/i18n';
 	import { listen } from '@tauri-apps/api/event';
 	import { UserAttentionType, appWindow } from '@tauri-apps/api/window';
@@ -25,7 +26,9 @@
 		ListboxOption
 	} from '@rgossiaux/svelte-headlessui';
 
-	const PROJECT_ID = '1KVo5zza';
+	// Get modpack configuration from build-time environment variables
+	const modpackConfig = getModpackConfig();
+	const PROJECT_ID = modpackConfig.projectId;
 	let totalMods = Infinity;
 
 	listen('install:progress', (event) => {
@@ -93,7 +96,7 @@
 				profileDirectory != ''
 					? profileDirectory
 					: isolateProfile
-					? `fabulously-optimized-${mc_version}`
+					? `${modpackConfig.defaultProfileId}-${mc_version}`
 					: undefined;
 			if (state != 'confirmDowngrade') {
 				const installed_metadata = await get_installed_metadata(profile_dir);
@@ -118,9 +121,9 @@
 			const icon = await fetch(project.icon_url!);
 			await install_mrpack(
 				url,
-				isolateProfile ? `fabulously-optimized-${mc_version}` : 'fabulously-optimized',
+				isolateProfile ? `${modpackConfig.defaultProfileId}-${mc_version}` : modpackConfig.defaultProfileId,
 				await icon.blob(),
-				isolateProfile ? `Fabulously Optimized ${mc_version}` : 'Fabulously Optimized',
+				isolateProfile ? `${modpackConfig.projectName} ${mc_version}` : modpackConfig.projectName,
 				profile_dir,
 				{
 					fo_version: {
