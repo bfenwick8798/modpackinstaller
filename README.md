@@ -1,9 +1,3 @@
-## Fabulously Optimized Installer
+## Modpackinstaller
 
-Installs Fabulously Optimized into Minecraft Launcher with a simple GUI.
-
-This program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.
-
-### Sponsors
-
-Free code signing for Windows provided by [SignPath.io](https://about.signpath.io/), certificate by [SignPath Foundation](https://signpath.org/)
+A generic fork of [Fabulously-Optimized/installer](https://github.com/Fabulously-Optimized/installer) which allows the installation of arbitrary modpacks on buildtime
